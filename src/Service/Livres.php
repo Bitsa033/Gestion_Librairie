@@ -39,10 +39,10 @@ class Livres extends AbstractController implements LivreModel
     // $livre->setQuantite($data["nbExemplaires"]);
     // $livre->setAuteur($auteurId);
     $auteur=new Auteur;
-        $auteur->setNom("Michel dedieu");
+    $auteur->setNom($data["auteurName"]);
 
         $livre = new Livre;
-        $livre->setNom("Execelence en Mathmatique 3eme ACD");
+        $livre->setNom($data["livreName"]);
         $livre->setGenre("Education");
         $livre->setAnneeEdition(2020);
         $livre->setQuantite(5);

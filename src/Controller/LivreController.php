@@ -25,13 +25,13 @@ class LivreController extends AbstractController
      */
     public function addLivre(Request $request, ServiceLivres $livre)
     {
-        $nameLivre=$request->request->get("nom");
+        $livreName=$request->request->get("nom");
         $genre=$request->request->get("genre");
         $anneeEdition=$request->request->get("annee");
         $nbExemplaires=$request->request->get("nb");
         $auteurName=$request->request->get("auteur");
         $livre->saveData(compact(
-            "nameLivre",
+            "livreName",
             "genre",
             "anneeEdition",
             "nbExemplaires",
