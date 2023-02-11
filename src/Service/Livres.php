@@ -29,15 +29,6 @@ class Livres extends AbstractController implements LivreModel
   // C =  create
   public function saveData($data)
   {
-    // $auteur=new Auteur;
-    // $auteur->setNom($data["auteurName"]);
-    // $auteurId=$this->repo->find($auteur);
-    // $livre = new Livre;
-    // $livre->setNom($data["nameLivre"]);
-    // $livre->setGenre($data["genre"]);
-    // $livre->setAnneeEdition($data["anneeEdition"]);
-    // $livre->setQuantite($data["nbExemplaires"]);
-    // $livre->setAuteur($auteurId);
     $auteur=new Auteur;
     $auteur->setNom($data["auteurName"]);
 
