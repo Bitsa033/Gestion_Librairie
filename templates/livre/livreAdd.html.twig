@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Livre!{% endblock %}
+
+{% block content %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <form class="form-horizontal" method="post" action="{{path('addLivre')}}">
+                        <div class="card-body">
+                            <h4 class="card-title">Personal Info</h4>
+                            <div class="form-group row">
+                                <label for="fname" class="col-sm-3 text-end control-label col-form-label">Nom du
+                                    Livre</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom du livre" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="lname" class="col-sm-3 text-end control-label col-form-label">Genre</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="genre" id="genre" placeholder="Catégorie" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="annee"
+                                    class="col-sm-3 text-end control-label col-form-label">Date d'édition</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="annee" id="annee"
+                                        placeholder="Date d'édition" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nb"
+                                    class="col-sm-3 text-end control-label col-form-label">Quantité</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="nb" id="nb"
+                                        placeholder="Nbre d'exemplaires" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="nb"
+                                    class="col-sm-3 text-end control-label col-form-label">Auteur</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="auteur" id="auteur"
+                                        placeholder="Nom de l'auteur" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary">
+                                    Valider
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Container fluid  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer class="footer text-center">
+                    All Rights Reserved by Matrix-admin. Designed and Developed by
+                    <a href="https://www.wrappixel.com">WrapPixel</a>.
+                </footer>
+                <!-- ============================================================== -->
+                <!-- End footer -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page wrapper  -->
+            <!-- ============================================================== -->
+
+            {% endblock %}

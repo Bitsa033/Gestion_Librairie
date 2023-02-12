@@ -1,73 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LivreController!{% endblock %}
+{% block title %}Médiathèque!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper .code { background: yellow; padding: 2px 6px; }
-    .voiture { color: blue; padding: 2px 6px; }
-</style>
+{% block content %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-0">Static Table</h5>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">N°</th>
+                                <th scope="col">Livre</th>
+                                <th scope="col">Année d'édition</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Quantité</th>
+                                <th scope="col">Auteur</th>
 
-<div class="example-wrapper">
-    <h1 class="code">{{titre}}</h1>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in livre %}
+                                
+                            <tr>
+                                <th scope="row">{{item.id}}</th>
+                                <td>{{item.nom}}</td>
+                                <td>{{item.anneeEdition}}</td>
+                                <td>{{item.genre}}</td>
+                                <td>{{item.quantite}}</td>
+                                <td>{{item.auteur.nom}}</td>
+                            </tr>
 
-    <table>
-        <tr>
-            <th>Nom du livre</th>
-            <th>Année d'édition</th>
-            <th>Genre</th>
-            <th>Nb exemplaires</th>
-            <th>Auteur</th>
-        </tr>
-        <tr>
-            <form action="{{path('addLivre')}}" method="post">
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
                 
-                <td><input type="text" name="nom" id=""></td>
-                <td><input type="text" name="annee" id=""></td>
-                <td><input type="text" name="genre" id=""></td>
-                <td><input type="text" name="nb" id=""></td>
-                <td><input type="text" name="auteur" id=""></td>
-            {# </form> #}
-        </tr>
-        <tr>
-            <td>
-                <button type="submit">Valider</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-    <table border="2">
-        <tr>
-            <th>Nom du livre</th>
-            <th>Année d'édition</th>
-            <th>Genre</th>
-            <th>Nb exemplaires</th>
-            <th>Auteur</th>
-        </tr>
-        
-        {% for item in livre %}
-        <tr>
-            <td>
-                {{ item.nom}}
-            </td>
-            <td>
-                {{ item.anneeEdition}}
-            </td>
-            <td>
-                {{ item.genre}}
-            </td>
-            <td>
-                {{ item.quantite}}
-            </td>
-            <td>
-                {{ item.auteur.nom}}
-            </td>
-            
-        </tr>
-        {% endfor %} 
-        
-    </table>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center">
+            All Rights Reserved by Matrix-admin. Designed and Developed by
+            <a href="https://www.wrappixel.com">WrapPixel</a>.
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
     
-</div>
-{% endblock %}
+    {% endblock %}

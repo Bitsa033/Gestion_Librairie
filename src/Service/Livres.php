@@ -44,6 +44,7 @@ class Livres extends AbstractController implements LivreModel
   public function getAllData():array
   {
     $repo=$this->repo;
+    // $data=$repo->findBy(array('anneeEdition' => '2020'),array('anneeEdition' => 'DESC'));
     $data=$repo->findAll();
     return $data;
   }

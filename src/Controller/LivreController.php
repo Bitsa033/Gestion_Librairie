@@ -19,6 +19,25 @@ class LivreController extends AbstractController
             'livre'=>$livres->getAllData()
         ]);
     }
+
+    /**
+     * @Route("livreAdd", name="livreAdd")
+     * @return void
+     */
+    public function livreAdd()
+    {
+        return $this->render('livre/livreAdd.html.twig',[]);
+    }
+
+    /**
+     * @Route("livreForSale", name="livreForSale")
+     * @return void
+     */
+    public function livreForSale()
+    {
+        return $this->render('livre/livreForSale.html.twig',[]);
+    }
+
     /**
      * @Route("addLivre", name="addLivre")
      * @return void
