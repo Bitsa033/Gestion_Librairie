@@ -11,6 +11,11 @@
     <!-- Container fluid  -->
     <!-- ============================================================== -->
     <div class="container-fluid">
+        
+        {% for page in pages %}
+            <a href="{{path('livre',{id:page})}}" class="btn btn-info">{{page}}</a>
+        {% endfor %}
+        
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -33,12 +38,12 @@
                             {% for item in livre %}
                                 
                             <tr>
-                                <th scope="row">{{item.id}}</th>
-                                <td>{{item.nom}}</td>
-                                <td>{{item.anneeEdition}}</td>
+                                <th scope="row">{{item.idl}}</th>
+                                <td>{{item.noml}}</td>
+                                <td>{{item.annee_edition}}</td>
                                 <td>{{item.genre}}</td>
                                 <td>{{item.quantite}}</td>
-                                <td>{{item.auteur.nom}}</td>
+                                <td>{{item.auteur}}</td>
                             </tr>
 
                             {% endfor %}

@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use PDO;
 
 /**
  * @extends ServiceEntityRepository<Livre>
@@ -34,6 +35,54 @@ class LivreRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function get_nb_id()
+    {
+        $conn =new \PDO('mysql:host=localhost;dbname=mediatheque','root','');
+        $sql = '
+        SELECT count(id) as id from livre
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $tab=$stmt->fetch();
+        // returns an array of arrays (i.e. a raw data set)
+        return $tab['id'];
+        
+    }
+
+    public function pagination($debut,$fin)
+    {
+        $conn =new \PDO('mysql:host=localhost;dbname=mediatheque','root','');
+        $sql = '
+        SELECT livre.id as idl,livre.nom as noml,annee_edition,genre,quantite, auteur.nom as auteur
+        from livre inner join auteur on auteur.id=livre.auteur_id order by livre.id desc limit
+        ' .$debut. ',' .$fin;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $tab=$stmt->fetchAll();
+        // returns an array of arrays (i.e. a raw data set)
+        return $tab;
+        
+    }
+
+    // public function nb(Compte $compte,$somme)
+    // {
+    //     $conn = $this->_em->getConnection();
+    //     $sql = '
+    //         update compte set solde = solde + :somme where id= :compte
+    //     ';
+    //     $stmt = $conn->prepare($sql);
+    //     $stmt->executeQuery([
+    //         'compte'=>$compte->getId(),
+    //         'somme'=>$somme
+    //     ]);
+
+    //     //$resultat=$stmt->fetchAll();
+
+    //     // returns an array of arrays (i.e. a raw data set)
+    //     //return $resultat;
+        
+    // }
 
     /**
      * @throws ORMException

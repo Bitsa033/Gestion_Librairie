@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+
+use App\Repository\LivreRepository;
 use App\Service\Livres as ServiceLivres;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,11 +14,25 @@ class LivreController extends AbstractController
     /**
      * @Route("/", name="livre")
      */
-    public function index(ServiceLivres $livres): Response
+    public function index(Request $request,ServiceLivres $livres,LivreRepository $l): Response
     {
+        $nb_id=$l->get_nb_id();
+        $nb_el_par_page=2;
+        $nb_pages=ceil($nb_id/$nb_el_par_page);
+        $id_of_query=$request->query->get('id');
+        $debut_de_page=($id_of_query-1) * $nb_el_par_page;
+        //$nb_row = array(1);
+        if (!empty( $nb_id)) {
+           
+            for ($i = 1; $i < $nb_pages; $i++) {
+                $nb_row[$i] = $i;
+            }
+        }
+        
         return $this->render('livre/index.html.twig', [
             'titre' => 'Application de gestion d\'une médiathèque !',
-            'livre'=>$livres->getAllData()
+            'livre'=>$l->pagination($debut_de_page,$nb_el_par_page),
+            'pages'=>$nb_row
         ]);
     }
 
