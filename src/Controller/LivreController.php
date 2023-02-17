@@ -14,7 +14,7 @@ class LivreController extends AbstractController
     /**
      * @Route("/", name="livre")
      */
-    public function index(Request $request,ServiceLivres $livres,LivreRepository $l): Response
+    public function index(Request $request,ServiceLivres $service,LivreRepository $l): Response
     {
         $nb_id=$l->get_nb_id();
         $nb_el_par_page=2;
@@ -28,10 +28,17 @@ class LivreController extends AbstractController
                 $nb_row[$i] = $i;
             }
         }
+
+        if (!empty( $id_of_query)) {
+            $livres=$l->pagination($debut_de_page,$nb_el_par_page);
+        }
+        else {
+            $livres="";
+        }
         
         return $this->render('livre/index.html.twig', [
             'titre' => 'Application de gestion d\'une médiathèque !',
-            'livre'=>$l->pagination($debut_de_page,$nb_el_par_page),
+            'livre'=>$livres,
             'pages'=>$nb_row
         ]);
     }

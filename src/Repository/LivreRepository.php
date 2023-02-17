@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use PDO;
 
 /**
@@ -36,9 +37,20 @@ class LivreRepository extends ServiceEntityRepository
         }
     }
 
+    public function connection_to_databse(){
+
+        try {
+            $pdo=new \PDO('mysql:host=localhost;dbname=mediatheque','root','');
+        } catch (Exception $th) {
+            die( "Base de données introuvable ! ");
+        }
+
+        return $pdo;
+    }
+    
     public function get_nb_id()
     {
-        $conn =new \PDO('mysql:host=localhost;dbname=mediatheque','root','');
+        $conn = $this->connection_to_databse();
         $sql = '
         SELECT count(id) as id from livre
             ';
@@ -52,7 +64,7 @@ class LivreRepository extends ServiceEntityRepository
 
     public function pagination($debut,$fin)
     {
-        $conn =new \PDO('mysql:host=localhost;dbname=mediatheque','root','');
+        $conn = $this->connection_to_databse();
         $sql = '
         SELECT livre.id as idl,livre.nom as noml,annee_edition,genre,quantite, auteur.nom as auteur
         from livre inner join auteur on auteur.id=livre.auteur_id order by livre.id desc limit
