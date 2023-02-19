@@ -38,33 +38,6 @@ class Livres implements LivreModel
     $livre->setAuteur($auteur);
     $this->saveToDb($livre);
   }
-  // R =  read
-  public function getAllData():array
-  {
-    $repo=$this->repo;
-    // $data=$repo->findBy(array('anneeEdition' => '2020'),array('anneeEdition' => 'DESC'));
-    $data=$repo->findAll();
-    return $data;
-  }
-  public function getIdData($id)
-  {
-    $repo=$this->repo;
-    $data=$repo->find($id);
-    return $data;
-  }
-  // U  = update
-  public function updateData()
-  {
-
-  }
-  // D = delete
-  public function removeOneData($id)
-  {
-
-  }
-  public function removeAllData()
-  {
-
-  }
+  
   
 }

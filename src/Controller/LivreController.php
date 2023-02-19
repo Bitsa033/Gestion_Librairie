@@ -45,6 +45,7 @@ class LivreController extends AbstractController
     }
 
     /**
+     * on affiche le formulaire d'enregistrement du livre
      * @Route("addLivre", name="addLivre")
      * @return void
      */
@@ -54,7 +55,7 @@ class LivreController extends AbstractController
     }
 
     /**
-     * formulaire de modification du livre
+     * on affiche le formulaire de modification du livre
      * @Route("getLivre_{id}", name="getLivre")
      * @return void
      */
@@ -67,17 +68,19 @@ class LivreController extends AbstractController
     }
 
     /**
+     * on affiche le formulaire pour emprunter le livre
      * @Route("forGiveLivre", name="forGiveLivre")
      * @return void
      */
     public function forGiveLivre(ServiceLivres $service)
     {
         return $this->render('livre/forGiveLivre.html.twig',[
-            'livre'=>$service
+            'livre'=>$service->repo
         ]);
     }
 
     /**
+     * on enregistre le livre dans la bd
      * @Route("saveLivre", name="saveLivre")
      * @return void
      */
@@ -99,6 +102,7 @@ class LivreController extends AbstractController
     }
 
     /**
+     * on modifie les données du livre par son id dans la bd
      * @Route("updateLivre_{id}", name="updateLivre")
      * @return void
      */
@@ -119,6 +123,17 @@ class LivreController extends AbstractController
 
         $service->db->flush();
         
+        return $this->redirectToRoute('livre');
+    }
+
+    /**
+     *@Route("deleteLivre_{id}", name="deleteLivre")
+     * @return void
+     */
+    public function deleteLivre(ServiceLivres $service,$id)
+    {
+        $livre=$service->repo->find($id);
+        $service->repo->remove($livre);
         return $this->redirectToRoute('livre');
     }
 }
