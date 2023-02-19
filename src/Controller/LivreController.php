@@ -127,6 +127,21 @@ class LivreController extends AbstractController
     }
 
     /**
+     * on modifie les données du livre par son id dans la bd
+     * @Route("removeLivre_{id}", name="removeLivre")
+     * @return void
+     */
+    public function removeLivre(Request $request, ServiceLivres $service,$id)
+    {
+        $nbExemplaires=$request->request->get("nb");
+
+        $livre=$service->repo->find($id);
+        $service->repo->retirer_livre($livre,$nbExemplaires);
+        
+        return $this->redirectToRoute('livre');
+    }
+
+    /**
      *@Route("deleteLivre_{id}", name="deleteLivre")
      * @return void
      */

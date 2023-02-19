@@ -76,24 +76,20 @@ class LivreRepository extends ServiceEntityRepository
         
     }
 
-    // public function nb(Compte $compte,$somme)
-    // {
-    //     $conn = $this->_em->getConnection();
-    //     $sql = '
-    //         update compte set solde = solde + :somme where id= :compte
-    //     ';
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->executeQuery([
-    //         'compte'=>$compte->getId(),
-    //         'somme'=>$somme
-    //     ]);
+    public function retirer_livre(Livre $livre,$quanite)
+    {
+        $conn = $this->_em->getConnection();
+        $sql = '
+            update livre set quantite = quantite - :quantite where id= :livre
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->executeQuery([
+            'livre'=>$livre->getId(),
+            'quantite'=>$quanite
+        ]);
 
-    //     //$resultat=$stmt->fetchAll();
-
-    //     // returns an array of arrays (i.e. a raw data set)
-    //     //return $resultat;
         
-    // }
+    }
 
     /**
      * @throws ORMException
