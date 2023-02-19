@@ -69,13 +69,13 @@ class LivreController extends AbstractController
 
     /**
      * on affiche le formulaire pour emprunter le livre
-     * @Route("forGiveLivre", name="forGiveLivre")
+     * @Route("forGiveLivre_{id}", name="forGiveLivre")
      * @return void
      */
-    public function forGiveLivre(ServiceLivres $service)
+    public function forGiveLivre(ServiceLivres $service,$id)
     {
         return $this->render('livre/forGiveLivre.html.twig',[
-            'livre'=>$service->repo
+            'livre'=>$service->repo->find($id)
         ]);
     }
 

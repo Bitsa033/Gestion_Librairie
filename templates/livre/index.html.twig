@@ -46,6 +46,7 @@
                                 <td>{{item.quantite}}</td>
                                 <td>{{item.auteur}}</td>
                                 <td>
+                                    <a class="btn btn-success" href="{{path('forGiveLivre',{id:item.idl})}}"><i class="fa fa-shopping-cart"></i></a>
                                     <a class="btn btn-warning" href="{{path('getLivre',{id:item.idl})}}"><i class="fa fa-edit"></i></a>
                                     <a class="btn btn-danger" href="{{path('deleteLivre',{id:item.idl})}}"><i class="fa fa-trash"></i></a>
                                 </td>

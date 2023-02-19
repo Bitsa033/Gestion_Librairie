@@ -33,17 +33,17 @@
                                     {# nom du livre #}
                                     <td>
                                         <input type="text" class="form-control" name="nom" id="nom"
-                                            placeholder="Nom du livre" />
+                                            value={{livre.nom}} disabled />
                                     </td>
                                     {# annee d'édition #}
                                     <td>
                                         <input type="text" class="form-control" name="annee" id="annee"
-                                            placeholder="Date de sortie" />
+                                        value={{livre.anneeEdition}} disabled />
                                     </td>
                                     {# type du livre #}
                                     <td>
                                         <input type="text" class="form-control" name="genre" id="genre"
-                                            placeholder="Catégorie" />
+                                        value={{livre.genre}} disabled />
 
                                     </td>
                                     {# Quantité ou nbre d'exemplaires #}
@@ -60,7 +60,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="auteur" id="auteur"
-                                                    placeholder="Nom de l'auteur" />
+                                                value={{livre.auteur.nom}} disabled />
                                             </div>
                                         </div>
                                     </td>
