@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\LivreRepository;
 use App\Service\Livres as ServiceLivres;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,25 +11,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class LivreController extends AbstractController
 {
     /**
+     * on crée un système de pagination
+     * on consulte tous les enregistrements
      * @Route("/", name="livre")
      */
-    public function index(Request $request,ServiceLivres $service,LivreRepository $l): Response
+    public function index(Request $request,ServiceLivres $service): Response
     {
-        $nb_id=$l->get_nb_id();
-        $nb_el_par_page=2;
-        $nb_pages=ceil($nb_id/$nb_el_par_page);
-        $id_of_query=$request->query->get('id');
-        $debut_de_page=($id_of_query-1) * $nb_el_par_page;
-        //$nb_row = array(1);
+        $nb_id=$service->repo->get_nb_id();//nbre d'id dans la bd
+        $nb_el_par_page=5; //nbre d'éléments par page
+        $nb_pages=ceil($nb_id/$nb_el_par_page);//on calcule le nbre de pages
+        $id_of_query=$request->query->get('id');//on recupère l'id dans le $_GET
+        $debut_de_page=($id_of_query-1) * $nb_el_par_page;//on calcule la limite inférieure
         if (!empty( $nb_id)) {
-           
-            for ($i = 1; $i < $nb_pages; $i++) {
+           //on incrémente $i en fonction du $nb_pages Ex: si $nb_pages=10, $i=1...10
+            for ($i = 1; $i <= $nb_pages; $i++) {
                 $nb_row[$i] = $i;
             }
         }
 
         if (!empty( $id_of_query)) {
-            $livres=$l->pagination($debut_de_page,$nb_el_par_page);
+            //on affiche la pagination
+            $livres=$service->repo->pagination($debut_de_page,$nb_el_par_page);
         }
         else {
             $livres="";
@@ -44,28 +45,43 @@ class LivreController extends AbstractController
     }
 
     /**
-     * @Route("livreAdd", name="livreAdd")
-     * @return void
-     */
-    public function livreAdd()
-    {
-        return $this->render('livre/livreAdd.html.twig',[]);
-    }
-
-    /**
-     * @Route("livreForSale", name="livreForSale")
-     * @return void
-     */
-    public function livreForSale()
-    {
-        return $this->render('livre/livreForSale.html.twig',[]);
-    }
-
-    /**
      * @Route("addLivre", name="addLivre")
      * @return void
      */
-    public function addLivre(Request $request, ServiceLivres $livre)
+    public function addLivre()
+    {
+        return $this->render('livre/addLivre.html.twig',[]);
+    }
+
+    /**
+     * formulaire de modification du livre
+     * @Route("getLivre_{id}", name="getLivre")
+     * @return void
+     */
+    public function getLivre(ServiceLivres $service,$id)
+    {
+
+        return $this->render('livre/getLivre.html.twig',[
+            'livre'=>$service->repo->find($id)
+        ]);
+    }
+
+    /**
+     * @Route("forGiveLivre", name="forGiveLivre")
+     * @return void
+     */
+    public function forGiveLivre(ServiceLivres $service)
+    {
+        return $this->render('livre/forGiveLivre.html.twig',[
+            'livre'=>$service
+        ]);
+    }
+
+    /**
+     * @Route("saveLivre", name="saveLivre")
+     * @return void
+     */
+    public function saveLivre(Request $request, ServiceLivres $livre)
     {
         $livreName=$request->request->get("nom");
         $genre=$request->request->get("genre");
@@ -79,6 +95,30 @@ class LivreController extends AbstractController
             "nbExemplaires",
             "auteurName",
         ));
+        return $this->redirectToRoute('livre');
+    }
+
+    /**
+     * @Route("updateLivre_{id}", name="updateLivre")
+     * @return void
+     */
+    public function updateLivre(Request $request, ServiceLivres $service,$id)
+    {
+        $livreName=$request->request->get("nom");
+        $genre=$request->request->get("genre");
+        $anneeEdition=$request->request->get("annee");
+        $nbExemplaires=$request->request->get("nb");
+        $auteurName=$request->request->get("auteur");
+
+        $livre=$service->repo->find($id);
+        $livre->setNom($livreName);
+        $livre->setAnneeEdition($anneeEdition);
+        $livre->setQuantite($nbExemplaires);
+        $livre->setGenre($genre);
+        //$livre->setAuteur($auteurName);
+
+        $service->db->flush();
+        
         return $this->redirectToRoute('livre');
     }
 }

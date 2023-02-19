@@ -5,12 +5,11 @@ use App\Entity\Auteur;
 use App\Entity\Livre;
 use App\Repository\LivreRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class Livres extends AbstractController implements LivreModel
+class Livres implements LivreModel
 {
-  protected $repo;
-  protected $db;
+  public $repo;
+  public $db;
   
   function __construct(LivreRepository $livreRepository, ManagerRegistry $managerRegistry)
   {
@@ -31,13 +30,12 @@ class Livres extends AbstractController implements LivreModel
   {
     $auteur=new Auteur;
     $auteur->setNom($data["auteurName"]);
-
-      $livre = new Livre;
-      $livre->setNom($data["livreName"]);
-      $livre->setGenre($data["genre"]);
-      $livre->setAnneeEdition($data["anneeEdition"]);
-      $livre->setQuantite($data["nbExemplaires"]);
-      $livre->setAuteur($auteur);
+    $livre = new Livre;
+    $livre->setNom($data["livreName"]);
+    $livre->setGenre($data["genre"]);
+    $livre->setAnneeEdition($data["anneeEdition"]);
+    $livre->setQuantite($data["nbExemplaires"]);
+    $livre->setAuteur($auteur);
     $this->saveToDb($livre);
   }
   // R =  read

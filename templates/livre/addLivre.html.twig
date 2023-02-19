@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Livre!{% endblock %}
+
+{% block content %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <button class="btn btn-success"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-success"><i class="fa fa-trash"></i></button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Livre</th>
+                                <th scope="col">Année d'édition</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Quantité</th>
+                                <th scope="col">Auteur</th>
+
+                            </tr>
+                        </thead>
+                        <form autocomplete="off" class="form-horizontal" method="post" action="{{path('saveLivre')}}">
+                            <tbody>
+                                <tr>
+                                    {# nom du livre #}
+                                    <td>
+                                        <input type="text" class="form-control" name="nom" id="nom"
+                                            placeholder="Nom du livre" />
+                                    </td>
+                                    {# annee d'édition #}
+                                    <td>
+                                        <input type="text" class="form-control" name="annee" id="annee"
+                                            placeholder="Date de sortie" />
+                                    </td>
+                                    {# type du livre #}
+                                    <td>
+                                        <input type="text" class="form-control" name="genre" id="genre"
+                                            placeholder="Catégorie" />
+
+                                    </td>
+                                    {# Quantité ou nbre d'exemplaires #}
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="nb" id="nb"
+                                                    placeholder="Quantité" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    {# nom de l'auteur #}
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="auteur" id="auteur"
+                                                    placeholder="Nom de l'auteur" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                    </table>
+
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary">
+                                Valider
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Container fluid  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer class="footer text-center">
+                    All Rights Reserved by Matrix-admin. Designed and Developed by
+                    <a href="https://www.wrappixel.com">WrapPixel</a>.
+                </footer>
+                <!-- ============================================================== -->
+                <!-- End footer -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page wrapper  -->
+            <!-- ============================================================== -->
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

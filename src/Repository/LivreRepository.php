@@ -8,7 +8,6 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
-use PDO;
 
 /**
  * @extends ServiceEntityRepository<Livre>
@@ -125,15 +124,16 @@ class LivreRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Livre
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
+    // public function findOneBySomeField($value): ?Livre
+    // {
+    //     return $this->createQueryBuilder('l')
+    //         ->andWhere('l.exampleField = :val')
+    //         ->orderBy('id','desc')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
+    
 }
