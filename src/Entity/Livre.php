@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,22 @@ class Livre
      * @ORM\Column(type="integer")
      */
     private $anneeEdition;
+
+    /**
+     * @ORM\OneToMany(targetEntity=EntreeLivre::class, mappedBy="livre")
+     */
+    private $entreeLivres;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SortieLivre::class, mappedBy="livre")
+     */
+    private $sortieLivres;
+
+    public function __construct()
+    {
+        $this->entreeLivres = new ArrayCollection();
+        $this->sortieLivres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +121,66 @@ class Livre
     public function setAnneeEdition(int $anneeEdition): self
     {
         $this->anneeEdition = $anneeEdition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EntreeLivre>
+     */
+    public function getEntreeLivres(): Collection
+    {
+        return $this->entreeLivres;
+    }
+
+    public function addEntreeLivre(EntreeLivre $entreeLivre): self
+    {
+        if (!$this->entreeLivres->contains($entreeLivre)) {
+            $this->entreeLivres[] = $entreeLivre;
+            $entreeLivre->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntreeLivre(EntreeLivre $entreeLivre): self
+    {
+        if ($this->entreeLivres->removeElement($entreeLivre)) {
+            // set the owning side to null (unless already changed)
+            if ($entreeLivre->getLivre() === $this) {
+                $entreeLivre->setLivre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SortieLivre>
+     */
+    public function getSortieLivres(): Collection
+    {
+        return $this->sortieLivres;
+    }
+
+    public function addSortieLivre(SortieLivre $sortieLivre): self
+    {
+        if (!$this->sortieLivres->contains($sortieLivre)) {
+            $this->sortieLivres[] = $sortieLivre;
+            $sortieLivre->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieLivre(SortieLivre $sortieLivre): self
+    {
+        if ($this->sortieLivres->removeElement($sortieLivre)) {
+            // set the owning side to null (unless already changed)
+            if ($sortieLivre->getLivre() === $this) {
+                $sortieLivre->setLivre(null);
+            }
+        }
 
         return $this;
     }

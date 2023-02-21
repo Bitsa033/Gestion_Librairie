@@ -68,15 +68,19 @@ class LivreController extends AbstractController
      */
     public function saveLivre(Request $request, ServiceLivres $service_livre)
     {
-        $livre=$service_livre->table_livre;
         $auteur=$service_livre->table_auteur;
         $auteur->setNom($request->request->get("auteur"));
+        $livre=$service_livre->table_livre;
         $livre->setNom($request->request->get("nom"));
         $livre->setGenre($request->request->get("genre"));
         $livre->setAnneeEdition($request->request->get("annee"));
         $livre->setQuantite($request->request->get("nb"));
         $livre->setAuteur($auteur);
-        $service_livre->saveToDb($livre);
+        $entree=$service_livre->table_entree_livre;
+        $entree->setLivre($livre);
+        $entree->setQuantite($request->request->get("nb"));
+        $entree->setDateE(new \Datetime);
+        $service_livre->saveToDb($entree);
         return $this->redirectToRoute('livre');
     }
 
@@ -105,15 +109,22 @@ class LivreController extends AbstractController
         $anneeEdition=$request->request->get("annee");
         $nbExemplaires=$request->request->get("nb");
         $auteurName=$request->request->get("auteur");
-
         $livre=$service_livre->repo_livre->find($id);
         $livre->setNom($livreName);
         $livre->setAnneeEdition($anneeEdition);
         $livre->setQuantite($nbExemplaires);
         $livre->setGenre($genre);
         $livre->getAuteur()->setNom($auteurName);
-
-        $service_livre->db->flush();
+        $entree=$service_livre->table_entree_livre;
+        $entree->setLivre($livre);
+        $qte_livre_db=$livre->getQuantite();
+        $qte_entree_livre=$nbExemplaires - $qte_livre_db;
+        dd($qte_entree_livre);
+        
+        // $entree->setQuantite($nbExemplaires-$qte_livre_db);
+        // $entree->setDateE(new \Datetime);
+        //$service_livre->saveToDb($entree);
+        //$service_livre->db->flush();
         
         return $this->redirectToRoute('livre');
     }
