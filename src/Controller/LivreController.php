@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Auteurs;
-use App\Service\Livres as ServiceLivres;
+use App\Service\Application as ServiceLivres;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ class LivreController extends AbstractController
      */
     public function index(Request $request,ServiceLivres $service): Response
     {
-        $nb_id=$service->repo->get_nb_id();//nbre d'id dans la bd
+        $nb_id=$service->repo_livre->get_nb_id();//nbre d'id dans la bd
         $nb_el_par_page=5; //nbre d'éléments par page
         $nb_pages=ceil($nb_id/$nb_el_par_page);//on calcule le nbre de pages
         $id_of_query=$request->query->get('id');//on recupère l'id dans le $_GET
@@ -30,13 +29,19 @@ class LivreController extends AbstractController
                 $nb_row[$i] = $i;
             }
         }
+        if (empty( $nb_id)) {
+            //on incrémente $i en fonction du $nb_pages Ex: si $nb_pages=10, $i=1...10
+            $nb_row="";
+            //  for ($i = 1; $i <= $nb_pages; $i++) {
+            //  }
+         }
 
         if (!empty( $id_of_query)) {
             //on affiche la pagination
-            $livres=$service->repo->pagination($debut_de_page,$nb_el_par_page);
+            $livres=$service->repo_livre->pagination($debut_de_page,$nb_el_par_page);
         }
         else {
-            $livres=$service->repo->pagination($query_on_null,$nb_el_par_page);;
+            $livres=$service->repo_livre->pagination($query_on_null,$nb_el_par_page);
         }
         
         return $this->render('livre/index.html.twig', [
@@ -61,10 +66,10 @@ class LivreController extends AbstractController
      * @Route("saveLivre", name="saveLivre")
      * @return void
      */
-    public function saveLivre(Request $request, ServiceLivres $service_livre,Auteurs $service_auteur)
+    public function saveLivre(Request $request, ServiceLivres $service_livre)
     {
-        $livre=$service_livre->table;
-        $auteur=$service_auteur->table;
+        $livre=$service_livre->table_livre;
+        $auteur=$service_livre->table_auteur;
         $auteur->setNom($request->request->get("auteur"));
         $livre->setNom($request->request->get("nom"));
         $livre->setGenre($request->request->get("genre"));
@@ -84,7 +89,7 @@ class LivreController extends AbstractController
     {
 
         return $this->render('livre/getLivre.html.twig',[
-            'livre'=>$service->repo->find($id)
+            'livre'=>$service->repo_livre->find($id)
         ]);
     }
 
@@ -101,7 +106,7 @@ class LivreController extends AbstractController
         $nbExemplaires=$request->request->get("nb");
         $auteurName=$request->request->get("auteur");
 
-        $livre=$service_livre->repo->find($id);
+        $livre=$service_livre->repo_livre->find($id);
         $livre->setNom($livreName);
         $livre->setAnneeEdition($anneeEdition);
         $livre->setQuantite($nbExemplaires);
@@ -121,12 +126,13 @@ class LivreController extends AbstractController
     public function forGiveLivre(ServiceLivres $service,int $id)
     {
         return $this->render('livre/forGiveLivre.html.twig',[
-            'livre'=>$service->repo->find($id)
+            'livre'=>$service->repo_livre->find($id)
         ]);
     }
 
     /**
      * on diminue la quantité du livre par son id dans la bd
+     * Ex:si nb_livres=18, retirer_livre(5), nb_livres=13
      * @Route("removeLivre_{id}", name="removeLivre")
      * @return void
      */
@@ -134,8 +140,8 @@ class LivreController extends AbstractController
     {
         $nbExemplaires=$request->request->get("nb");
 
-        $livre=$service->repo->find($id);
-        $service->repo->retirer_livre($livre,$nbExemplaires);
+        $livre=$service->repo_livre->find($id);
+        $service->repo_livre->retirer_livre($livre,$nbExemplaires);
         
         return $this->redirectToRoute('getLivre',[
             'id'=>$livre->getId()
@@ -143,13 +149,14 @@ class LivreController extends AbstractController
     }
 
     /**
+     * supprime un livre de la bd par son id
      *@Route("deleteLivre_{id}", name="deleteLivre")
      * @return void
      */
     public function deleteLivre(ServiceLivres $service,$id)
     {
-        $livre=$service->repo->find($id);
-        $service->repo->remove($livre);
+        $livre=$service->repo_livre->find($id);
+        $service->repo_livre->remove($livre);
         return $this->redirectToRoute('livre');
     }
 }
