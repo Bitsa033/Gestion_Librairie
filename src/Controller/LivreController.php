@@ -112,19 +112,19 @@ class LivreController extends AbstractController
         $livre=$service_livre->repo_livre->find($id);
         $livre->setNom($livreName);
         $livre->setAnneeEdition($anneeEdition);
-        $livre->setQuantite($nbExemplaires);
+        $qte_livre_db=$livre->getQuantite();
+        $qte_entree_livre=$nbExemplaires + $qte_livre_db;
+        $livre->setQuantite($qte_entree_livre);
         $livre->setGenre($genre);
         $livre->getAuteur()->setNom($auteurName);
         $entree=$service_livre->table_entree_livre;
         $entree->setLivre($livre);
-        $qte_livre_db=$livre->getQuantite();
-        $qte_entree_livre=$nbExemplaires - $qte_livre_db;
-        dd($qte_entree_livre);
+        //dd($qte_entree_livre);
         
-        // $entree->setQuantite($nbExemplaires-$qte_livre_db);
-        // $entree->setDateE(new \Datetime);
-        //$service_livre->saveToDb($entree);
-        //$service_livre->db->flush();
+        $entree->setQuantite($nbExemplaires);
+        $entree->setDateE(new \Datetime);
+        $service_livre->saveToDb($entree);
+        $service_livre->db->flush();
         
         return $this->redirectToRoute('livre');
     }
