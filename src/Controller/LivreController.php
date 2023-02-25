@@ -47,7 +47,9 @@ class LivreController extends AbstractController
         return $this->render('livre/index.html.twig', [
             'titre' => 'Application de gestion d\'une médiathèque !',
             'livre'=>$livres,
-            'pages'=>$nb_row
+            'pages'=>$nb_row,
+            'nb_id'=>$nb_id,
+            'par_page'=>$nb_el_par_page
         ]);
     }
 

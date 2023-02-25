@@ -13,7 +13,9 @@
     <div class="container-fluid">
         
         {% for page in pages %}
-            <a href="{{path('livre',{id:page})}}" class="btn btn-info">{{page}}</a>
+            {% if nb_id > par_page %}
+                <a href="{{path('livre',{id:page})}}" class="btn btn-info">{{page}}</a>
+            {% endif %}
         {% endfor %}
         
         <div class="row">
