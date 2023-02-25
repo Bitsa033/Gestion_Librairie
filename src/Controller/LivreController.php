@@ -52,6 +52,30 @@ class LivreController extends AbstractController
     }
 
     /**
+     * on affiche le formulaire de modification du livre
+     * @Route("history_{id}", name="history")
+     * @return void
+     */
+    public function history(ServiceLivres $service,$id)
+    {
+        $livre=$service->repo_livre->find($id);
+        $livre_in=$service->repo_entree_livre->findBy([
+            'livre'=>$service->repo_livre->find($id)
+        ]);
+        $livre_out=$service->repo_sortie_livre->findBy([
+            'livre'=>$service->repo_livre->find($id)
+        ]);
+        //dd($livre);
+        
+        return $this->render('livre/history.html.twig',[
+            'livre_in'=>$livre_in,
+            'livre_out'=>$livre_out,
+            'livre'=>$livre
+
+        ]);
+    }
+
+    /**
      * on affiche le formulaire d'enregistrement du livre
      * @Route("addLivre", name="addLivre")
      * @return void
@@ -124,7 +148,7 @@ class LivreController extends AbstractController
         $entree->setQuantite($nbExemplaires);
         $entree->setDateE(new \Datetime);
         $service_livre->saveToDb($entree);
-        $service_livre->db->flush();
+        // $service_livre->db->flush();
         
         return $this->redirectToRoute('livre');
     }
@@ -152,7 +176,17 @@ class LivreController extends AbstractController
         $nbExemplaires=$request->request->get("nb");
 
         $livre=$service->repo_livre->find($id);
-        $service->repo_livre->retirer_livre($livre,$nbExemplaires);
+        $qte_livre_db=$livre->getQuantite();
+        $qte_sortie_livre=$qte_livre_db -$nbExemplaires;
+        $livre->setQuantite($qte_sortie_livre);
+        $sortie=$service->table_sortie_livre;
+        $sortie->setLivre($livre);
+        //dd($qte_entree_livre);
+        
+        $sortie->setQuantite($nbExemplaires);
+        $sortie->setDateS(new \Datetime);
+        $service->saveToDb($sortie);
+        //$service->repo_livre->retirer_livre($livre,$nbExemplaires);
         
         return $this->redirectToRoute('getLivre',[
             'id'=>$livre->getId()

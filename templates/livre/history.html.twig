@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Médiathèque!{% endblock %}
+
+{% block content %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        
+        {# {% for page in pages %}
+            <a href="{{path('livre',{id:page})}}" class="btn btn-info">{{page}}</a>
+        {% endfor %}
+         #}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-0">
+                            Historique des entrées et sorties du livre: 
+                            <strong>{{livre.nom}}</strong>
+                        </h5>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Entrée</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in livre_in %}
+                                        
+                                    <tr>
+                                        <td>{{item.quantite}}</td>
+                                        <td>{{item.dateE|date("m/d/Y/h:m:s")}}</td>
+                                    </tr>
+        
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {# col #}
+
+                        <div class="col">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sortie</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in livre_out %}
+                                        
+                                    <tr>
+                                        <td>{{item.quantite}}</td>
+                                        <td>{{item.dateS|date("m/d/Y/h:m:s")}}</td>
+                                    </tr>
+        
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {# col #}
+                    </div>
+                    {# row #}
+
+                    
+                </div>
+                
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center">
+            All Rights Reserved by Matrix-admin. Designed and Developed by
+            <a href="https://www.wrappixel.com">WrapPixel</a>.
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+    
+    {% endblock %}
