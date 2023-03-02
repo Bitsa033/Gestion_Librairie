@@ -39,7 +39,7 @@
                                     {% for item in livre_in %}
                                         
                                     <tr>
-                                        <td>{{item.quantite}}</td>
+                                        <td> +{{item.quantite}}</td>
                                         <td>{{item.dateE|date("m/d/Y/h:m:s")}}</td>
                                     </tr>
         
@@ -62,7 +62,7 @@
                                     {% for item in livre_out %}
                                         
                                     <tr>
-                                        <td>{{item.quantite}}</td>
+                                        <td> -{{item.quantite}}</td>
                                         <td>{{item.dateS|date("m/d/Y/h:m:s")}}</td>
                                     </tr>
         

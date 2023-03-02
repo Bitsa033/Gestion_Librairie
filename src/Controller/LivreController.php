@@ -94,20 +94,42 @@ class LivreController extends AbstractController
      */
     public function saveLivre(Request $request, ServiceLivres $service_livre)
     {
+        if (!empty($request->request->get("nb"))) {
+            $nbExemplaires=$request->request->get("nb");
+        }
+        else {
+            $nbExemplaires=0;
+        }
+        if ($nbExemplaires>0) {
+            
+        }
+        if($nbExemplaires==0) {
+            return $this->json([
+                'message'=>'La quantité de votre stock d\'entrée est vide, Nous ne pouvons pas l\'enregistrer !',
+                'icon'=>'error'
+            ]);
+           //return new Response('La quantité de votre stock d\'entrée est vide, Nous ne pouvons pas l\'enregistrer !');
+        }
+        //dd($nbExemplaires);
         $auteur=$service_livre->table_auteur;
         $auteur->setNom($request->request->get("auteur"));
         $livre=$service_livre->table_livre;
         $livre->setNom($request->request->get("nom"));
         $livre->setGenre($request->request->get("genre"));
         $livre->setAnneeEdition($request->request->get("annee"));
-        $livre->setQuantite($request->request->get("nb"));
+        $livre->setQuantite($nbExemplaires);
         $livre->setAuteur($auteur);
         $entree=$service_livre->table_entree_livre;
         $entree->setLivre($livre);
         $entree->setQuantite($request->request->get("nb"));
         $entree->setDateE(new \Datetime);
         $service_livre->saveToDb($entree);
-        return $this->redirectToRoute('livre');
+        // return $this->redirectToRoute('livre');
+        return $this->json([
+            'message'=>'Votre stock a été inséré avec succèss !',
+            'icon'=>'success'
+        ]);
+        
     }
 
     /**
@@ -133,7 +155,12 @@ class LivreController extends AbstractController
         $livreName=$request->request->get("nom");
         $genre=$request->request->get("genre");
         $anneeEdition=$request->request->get("annee");
-        $nbExemplaires=$request->request->get("nb");
+        if (!empty($request->request->get("nb"))) {
+            $nbExemplaires=$request->request->get("nb");
+        }
+        else {
+            $nbExemplaires=0;
+        }
         $auteurName=$request->request->get("auteur");
         $livre=$service_livre->repo_livre->find($id);
         $livre->setNom($livreName);

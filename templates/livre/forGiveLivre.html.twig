@@ -13,6 +13,7 @@
     <div class="container-fluid">
         <button class="btn btn-success"><i class="fa fa-plus"></i></button>
         <button class="btn btn-success"><i class="fa fa-trash"></i></button>
+        <div class="message"></div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -32,18 +33,20 @@
                                 <tr>
                                     {# nom du livre #}
                                     <td>
-                                        <input type="text" class="form-control" name="nom" id="nom"
-                                            value={{livre.nom}} disabled />
+                                        <input type="hidden" class="form-control" name="id" id="id"
+                                            value="{{livre.id}}" />
+                                            <input type="text" class="form-control" name="nom" id="nom"
+                                            value="{{livre.nom}}" />
                                     </td>
                                     {# annee d'édition #}
                                     <td>
                                         <input type="text" class="form-control" name="annee" id="annee"
-                                        value={{livre.anneeEdition}} disabled />
+                                        value="{{livre.anneeEdition}}" />
                                     </td>
                                     {# type du livre #}
                                     <td>
                                         <input type="text" class="form-control" name="genre" id="genre"
-                                        value={{livre.genre}} disabled />
+                                        value="{{livre.genre}}"/>
 
                                     </td>
                                     {# Quantité ou nbre d'exemplaires #}
@@ -51,7 +54,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="nb" id="nb"
-                                                    placeholder="Quantité" />
+                                                value="{{livre.quantite}}" />
                                             </div>
                                         </div>
                                     </td>
@@ -60,7 +63,7 @@
                                         <div class="form-group row">
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="auteur" id="auteur"
-                                                value={{livre.auteur.nom}} disabled />
+                                                value="{{livre.auteur.nom}}" />
                                             </div>
                                         </div>
                                     </td>
@@ -71,7 +74,7 @@
 
                     <div class="border-top">
                         <div class="card-body">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit"  class="btn btn-primary">
                                 Valider
                             </button>
                         </div>

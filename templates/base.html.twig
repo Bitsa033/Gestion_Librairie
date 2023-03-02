@@ -12,8 +12,8 @@
     <link href="template/dist/css/style.min.css" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="16x16" href="template/assets/images/favicon.png" />
     <!-- Custom CSS -->
-    <link href="template/assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet" />
-    <link href="template/assets/libs/jquery-steps/steps.css" rel="stylesheet" />
+    {# <link href="template/assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet" />
+    <link href="template/assets/libs/jquery-steps/steps.css" rel="stylesheet" /> #}
     <link href="template/dist/css/style.min.css" rel="stylesheet" />
     {% block javascripts %}
     {#{{ encore_entry_script_tags('app') }}#}
@@ -21,6 +21,8 @@
 </head>
 
 <body>
+    <script src="Ajax/jquery.min.js"></script>
+    <script src="Ajax/livre.js"></script>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -439,7 +441,7 @@
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     {% block body %}{% endblock %}
-    <script src="template/assets/libs/jquery/dist/jquery.min.js"></script>
+    
     <!-- Bootstrap tether Core JavaScript -->
     <script src="template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="template/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
@@ -452,60 +454,12 @@
     <script src="template/dist/js/custom.min.js"></script>
     <script src="template/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="template/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+    
     <script>
         // Basic Example with form
-        var form = $("#example-form");
-        form.validate({
-            errorPlacement: function errorPlacement(error, element) {
-                element.before(error);
-            },
-            rules: {
-                confirm: {
-                    equalTo: "#password",
-                },
-            },
-        });
-        form.children("div").steps({
-            headerTag: "h3",
-            bodyTag: "section",
-            transitionEffect: "slideLeft",
-            onStepChanging: function (event, currentIndex, newIndex) {
-                form.validate().settings.ignore = ":disabled,:hidden";
-                return form.valid();
-            },
-            onFinishing: function (event, currentIndex) {
-                form.validate().settings.ignore = ":disabled";
-                return form.valid();
-            },
-            onFinished: function (event, currentIndex) {
-                //alert("Submitted!");
-                $(document).ready(function () {
-                    var nom = $('#nom').val()
-                    var genre = $('#genre').val()
-                    var anneeEdition = $('#anneeEdition').val()
-                    var quantite = $('#quantite').val()
-                    var auteur = $('#auteur').val()
-                    $.ajax({
-                        url: "addLivre",
-                        method: "POST",
-                        data: { nom: nom, genre: genre,anneeEdition:anneeEdition,quantite:quantite,auteur:auteur },
-                        success: function (data) {
-                            console.log(data);
-                            // setInterval(() => {
-                            //     location.href = "/"
-                            // }, 3000);
-                            
-                            //swal("Good job!", data.message, data.icon)
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log(textStatus)
-                        }
-
-                    })
-
-                })
-            },
-        });
+        var insert_livre= "{{path('saveLivre')}}"
+        var update_livre= ""
+        insertLivre(insert_livre,update_livre)
     </script>
 
 </body>
